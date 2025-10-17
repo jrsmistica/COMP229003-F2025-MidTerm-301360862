@@ -59,7 +59,7 @@ module.exports.update = async function (req, res, next) {
     updatedBook._id = req.params.bookId;
 
     // Submit the change
-    let result = await BookModel.updateOne({ _id: req.params.bookId });
+    let result = await BookModel.updateOne({ _id: req.params.bookId }, updatedBook);
     console.log("Result: ", result);
 
     // Handle the result: send a response.
@@ -85,12 +85,12 @@ module.exports.update = async function (req, res, next) {
 module.exports.remove = async function (req, res, next) {
   try {
     // Delete  using the id sent in the parameter of the request
-    let result = await BookModel.deleteOne({ _id: req.params.id });
+    let result = await BookModel.deleteOne({ _id: req.params.bookId });
     console.log("Result: ", result);
 
     // Handle the result and send a response
     if (result.deletedCount > 0) {
-      res.status(200);
+      res.status(200);  
       res.json(
         {
           success: true,
